@@ -1,0 +1,35 @@
+.contenidoHome{
+    height: 1000px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-image: url('/public/fondo.jpg') !important;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+
+.contenidoHome *{
+    margin: 5%;
+}
+
+.titulo{
+    font-size: 10em;
+    font-weight: 900;
+    color: #ffffff;
+    text-shadow: 0 0 10px #000;
+}
+
+/* mobile design */
+@media only screen and (max-width: 767px) {
+    .titulo{
+        font-size: 7em;
+    }
+    .botonLogin{
+        font-size: 2em !important; /* Cambia el tamaño de la fuente */
+        padding: 16px 32px !important; /* Cambia el relleno interior del botón */
+    }
+    .contenidoHome{
+        background-image: url('/public/fondomovil.jpg') !important;
+    }
+}

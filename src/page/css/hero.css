@@ -1,0 +1,127 @@
+/* .encabezado {
+    background-color: #000;
+    color: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+  }
+  
+  .hamburguesa {
+    background-color: #ff2800;
+    color: #fff;
+    border: none;
+    padding: 10px;
+    border-radius: 50%;
+    cursor: pointer;
+  }
+
+  .menu-lateral {
+    background-color: rgba(0, 0, 0, 0.8);
+    color: #fff;
+  }
+  
+  .menu-lateral a:hover {
+    color: #ff2800;
+  }
+  .hamburguesa {
+    background-color: #ff2800;
+    color: #fff;
+    border: none;
+    padding: 10px;
+    border-radius: 50%;
+    cursor: pointer;
+    border: 2px solid #fff;
+    font-size: 1.5em;
+    transition: all 0.3s ease;
+  }
+  
+  .hamburguesa:hover {
+    background-color: transparent;
+    color: #ff2800;
+  }
+   */
+
+   header {
+    position: relative; /* Nueva línea */
+    z-index: 1; /* Nueva línea */
+    background-color: #262626;
+    color: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+  }
+  
+  .logo {
+    display: flex;
+    align-items: center;
+  }
+  
+  .logo button {
+    background-color: transparent;
+    border: none;
+    color: #fff;
+    font-size: 1.2rem;
+    margin-right: 1rem;
+  }
+  
+  .logo h1 {
+    font-size: 2rem;
+    margin: 0;
+  }
+  
+  .contenido {
+    max-width: 800px;
+    margin: 2rem auto;
+    text-align: center;
+  }
+  
+  nav {
+    position: absolute; /* Nueva línea */
+    z-index: 2; /* Nueva línea */
+    top: 0; /* Nueva línea */
+    left: -250px; /* Nueva línea */
+    width: 250px; /* Nueva línea */
+    height: 100%; /* Nueva línea */
+    background-color: #262626;
+    color: #fff;
+    padding: 1rem;
+    transition: left 0.3s ease-in-out; /* Nueva línea */
+  }
+  
+  nav.abierto { /* Nueva sección */
+    left: 0;
+  }
+  
+  nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column; /* Nueva línea */
+    justify-content: center; /* Nueva línea */
+    height: 100%; /* Nueva línea */
+  }
+  
+  nav li {
+    margin: 0.5rem 0;
+    cursor: pointer;
+  }
+  
+  nav li:hover {
+    text-decoration: underline;
+  }
+
+.userDisplay{
+    /* centrar al lado derecho y centrado verticalmente */
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    margin-right: 1%;
+}
+
+.userDisplay span{
+   font-weight: 100;
+}
