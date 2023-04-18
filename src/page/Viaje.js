@@ -8,7 +8,7 @@ import { Modal, Button, Form, FloatingLabel, Table } from 'react-bootstrap';
 import { useParams } from "react-router-dom";
 
 
-export const Viaje = () => {
+const Viaje = ({user}) => {
     const firestore = getFirestore();
     const { id } = useParams();
     const [viaje, setViaje] = useState(null);
@@ -58,21 +58,18 @@ export const Viaje = () => {
 
     const [dentro, setDentro] = useState(false);
     async function fetchDentro() {
-            if (guser == null) {
-              return;
-            }
             const querySnapshot = await getDocs(collection(firestore, "deudas"));
                 const deudas = querySnapshot.docs.map(doc => doc.data());
                 console.log(deudas);
-                console.log(guser.uid)
+                //console.log(user)
                 deudas.forEach(deuda => {
-                  if (deuda.idViaje == id && deuda.idUsuario == guser.uid) {
+                  if (deuda.idViaje == id && deuda.idUsuario == user.uid) {
+                    console.log("dentro")
                     setDentro(true);
                   }
                 });
           }
-      useEffect(() => {
-        
+    useEffect(() => {
         fetchDentro();
       }, [id]);
 
@@ -85,8 +82,24 @@ export const Viaje = () => {
           idViaje: id.toString(),
           idUsuario: guser.uid,
           viaje: viaje.nombre,
-          importe: ((((viaje.distancia * viaje.consumo) / 100 ) * viaje.precio) / viaje.pasajeros).toFixed(2),
+          importe: ((((viaje.distancia * viaje.consumo) / 100 ) * viaje.precio) / (viaje.pasajeros + 1)).toFixed(2),
           pagada: false
+        });
+        
+        const querySnapshot = await getDocs(collection(firestore, "deudas"));
+        const deudas = querySnapshot.docs.map(doc => doc.data());
+        deudas.forEach(deuda => {
+          if (deuda.idViaje == id && deuda.idUsuario != guser.uid) {
+            const colecRef2 = collection(firestore, "deudas");
+            const docRef2 = doc(colecRef2, `${id}_${deuda.idUsuario}`);
+            setDoc(docRef2, {
+              idViaje: id.toString(),
+              idUsuario: deuda.idUsuario,
+              viaje: viaje.nombre,
+              importe: ((((viaje.distancia * viaje.consumo) / 100 ) * viaje.precio) / (viaje.pasajeros + 1)).toFixed(2),
+              pagada: false
+            });
+          }
         });
         fetchDentro();
     }
@@ -116,6 +129,8 @@ export const Viaje = () => {
     }
 
     const cambiarImporte = async (importe) => {
+
+        console.log(importe)
         const colecRef2 = collection(firestore, "deudas");
         const docRef2 = doc(colecRef2, `${id}_${guser.uid}`);
         await setDoc(docRef2, {
@@ -124,6 +139,22 @@ export const Viaje = () => {
           viaje: viaje.nombre,
           importe: importe,
           pagada: false
+        });
+
+        const querySnapshot = await getDocs(collection(firestore, "deudas"));
+        const deudas = querySnapshot.docs.map(doc => doc.data());
+        deudas.forEach(deuda => {
+          if (deuda.idViaje == id && deuda.idUsuario != guser.uid) {
+            const colecRef2 = collection(firestore, "deudas");
+            const docRef2 = doc(colecRef2, `${id}_${deuda.idUsuario}`);
+            setDoc(docRef2, {
+              idViaje: id.toString(),
+              idUsuario: deuda.idUsuario,
+              viaje: viaje.nombre,
+              importe: importe,
+              pagada: false
+            });
+          }
         });
     }
   
@@ -145,7 +176,7 @@ export const Viaje = () => {
         ) : (
           <p>Cargando...</p>
         )}
-        
+
         {
           dentro ? (
             <div>

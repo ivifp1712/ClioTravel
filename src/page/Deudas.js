@@ -6,7 +6,7 @@ import { auth } from '../FirebaseConfig';
 import {Button, Table } from 'react-bootstrap';import { Link } from "react-router-dom";
 
 const Deudas = ({user}) => {
-
+    console.log(user)
     const firestore = getFirestore();
     let [guser, setGuser] = useState(null);
     useEffect(()=>{
@@ -30,6 +30,13 @@ const Deudas = ({user}) => {
             console.log(deudasFiltradas)
             setDeudas(deudas)
             console.log(deudas)
+            let total = 0;
+            deudasFiltradas.forEach((deuda) => {
+                if (!deuda.pagada) {
+                    total += deuda.importe;
+                }
+            })
+            setTotalDeudas(total);
             }
 
     useEffect(() => {
@@ -89,6 +96,8 @@ const Deudas = ({user}) => {
         fetchDeudasUser();
     }
 
+    const [totalDeudas, setTotalDeudas] = useState(0);        
+
     return(
         <>
         { guser ? (
@@ -102,7 +111,7 @@ const Deudas = ({user}) => {
                         <tr>
                             <th>idViaje</th>
                             <th>Viaje</th>
-                            <th>importe</th>
+                            <th>Importe</th>
                             <th>Pagada</th>
                         </tr>
                     </thead>
@@ -122,6 +131,10 @@ const Deudas = ({user}) => {
                         ))}
                     </tbody>
                 </Table>
+
+                {/* numero de deudas */}
+                <h2>Deudas pendientes: {deudasUser && deudasUser.filter((deuda) => !deuda.pagada).length}</h2>
+                <h2>Deuda total: {totalDeudas}</h2>
             </div>
             </>
         ) : (
@@ -139,7 +152,7 @@ const Deudas = ({user}) => {
                         <tr>
                             <th>idViaje</th>
                             <th>idUsuario</th>
-                            <th>importe</th>
+                            <th>Importe</th>
                             <th>Pagada</th>
                             <th> Marcar como pagada</th>
                         </tr>

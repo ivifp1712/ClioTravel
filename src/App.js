@@ -9,7 +9,7 @@ import { Profile } from './page/Profile';
 import { BrowserRouter as Router} from 'react-router-dom';
 import {Routes, Route} from 'react-router-dom';
 import { Viajes } from './page/Viajes';
-import { Viaje } from './page/Viaje';
+import Viaje from './page/Viaje';
 import Deudas from './page/Deudas';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.min.js';
@@ -77,13 +77,13 @@ function App() {
           */}
           {guser &&
               <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/home" element={<Home />} />
-                <Route path="/viajes" element={<Viajes />} />
-                <Route path="/profile" element={<Profile />} />
-                <Route path="/amigos" element={<Amigos />} />
-                <Route path="/viaje/:id" element={<Viaje />} />
-                <Route path="/viaje" element={<Viajes />} />
+                <Route path="/" element={<Home user={guser} />} />
+                <Route path="/home" element={<Home user={guser}/>} />
+                <Route path="/viajes" element={<Viajes user={guser}/>} />
+                <Route path="/profile" element={<Profile user={guser}/>} />
+                <Route path="/amigos" element={<Amigos user={guser} />} />
+                <Route path="/viaje/:id" element={<Viaje user={guser} />} />
+                <Route path="/viaje" element={<Viajes user={guser} />} />
                 <Route path="/deudas" element={<Deudas user={guser} />} />
                 <Route path="/*" element={<Home />} />
               </Routes>
