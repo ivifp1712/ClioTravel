@@ -85,7 +85,7 @@ function App() {
                 <Route path="/viaje/:id" element={<Viaje />} />
                 <Route path="/viaje" element={<Viajes />} />
                 <Route path="/deudas" element={<Deudas user={guser} />} />
-                <Route path="*" element={<Home />} />
+                <Route path="/*" element={<Home />} />
               </Routes>
             }
             {!guser &&
@@ -94,7 +94,7 @@ function App() {
                 <Route path="/home" element={<Home />} />
                 <Route path="/signup" element={<Signup />} />
                 <Route path="/login" element={<Login />} />
-                <Route path="*" element={<Home />} />
+                <Route path="/*" element={<Home />} />
               </Routes>
             }
         </section>
