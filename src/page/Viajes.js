@@ -44,7 +44,10 @@ export const Viajes = () => {
     const [showModal, setShowModal] = useState(false); // estado para manejar la visibilidad de la ventana flotante
 
     const handleClose = () => setShowModal(false); // función para cerrar la ventana flotante
-    const handleShow = () => setShowModal(true); // función para abrir la ventana flotante
+    const handleShow = () => {
+        setShowModal(true); 
+        console.log("abrir")
+    }// función para abrir la ventana flotante
 
     const [nombreViaje, setNombreViaje] = useState('');
     const [consumo, setConsumo] = useState(7.5);
@@ -170,14 +173,12 @@ export const Viajes = () => {
                 <div className="container">
                     {/* solo aparece el boton si es admin */}
                     {admin ? (
-                        
+                        <>
                         <Button variant="primary" onClick={handleShow}>
                             Agregar viaje
                         </Button>
-                    ) : (
-                        <>
 
-                    <Modal show={showModal} onHide={handleClose}> {/* Ventana flotante */}
+                        <Modal show={showModal} onHide={handleClose}> {/* Ventana flotante */}
                         <Modal.Header closeButton>
                             <Modal.Title>Agregar viaje</Modal.Title>
                         </Modal.Header>
@@ -211,7 +212,13 @@ export const Viajes = () => {
                             </Button>
                             </Form>
                         </Modal.Body>
-                    </Modal>
+                        </Modal>
+                        </>
+                    ) 
+                    : () => { return null; } }
+                        <>
+
+                        <br />
 
                     <Table striped bordered hover>
                         <thead>
@@ -238,12 +245,19 @@ export const Viajes = () => {
                                 <td>{viaje.pasajeros}</td>
                                 <td>{viaje.user_id}</td>
                                 <td>
-                                <Button variant="danger" onClick={() => handleDelete(viaje)}>Borrar</Button>
+                                    {
+                                        admin ? (
+                                            <Button variant="danger" onClick={() => handleDelete(viaje)}>Borrar</Button>
+                                        ) : (
+                                            <Button variant="danger" disabled>Borrar</Button>
+                                        )
+                                    }
+                                
                                 </td>
                             </tr>
                             ))}
                         </tbody>
-                    </Table> </>)}
+                    </Table> </>
                 </div>
             </div>        
         ) : (

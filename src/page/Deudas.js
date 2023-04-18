@@ -101,7 +101,6 @@ const Deudas = ({user}) => {
                     <thead>
                         <tr>
                             <th>idViaje</th>
-                            <th>idUsuario</th>
                             <th>Viaje</th>
                             <th>importe</th>
                             <th>Pagada</th>
