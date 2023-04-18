@@ -46,8 +46,9 @@ export const Header = ({ handleLogout, user }) => {
             <ul>
                 <li><Link to={"/"}>Inicio</Link> </li>
                 <li><Link to={"/viajes"}>Viajes</Link> </li>
-                <li><Link to={"/amigos"}>Amigos</Link> </li>
+                {/* <li><Link to={"/amigos"}>Amigos</Link> </li> */}
                 <li><Link to={"/profile"}>Perfil</Link> </li>
+                <li><Link to={"/deudas"}>Deudas</Link> </li>
                 <li><button type="button" className="btn btn-danger" onClick={handleLogout}>Logout</button></li>
                
             </ul>

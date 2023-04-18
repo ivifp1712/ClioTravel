@@ -41,7 +41,7 @@ const Home = () => {
         <Hero handleLogout={handleLogout} user={guser}/>
         ): (
             <div className='contenidoHome'>
-            <h1 className='titulo'>Clio Travel</h1>
+            <h1 className='titulo'>Clio Travel Beta</h1>
 
             <Link to="/login">
                 <button className='btn btn-primary botonLogin'> Login </button>

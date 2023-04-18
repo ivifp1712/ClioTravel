@@ -2,8 +2,8 @@ import React, {useEffect, useState} from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import {  createUserWithEmailAndPassword, updateProfile  } from 'firebase/auth';
 import { getAuth } from "firebase/auth";
-import { getFirestore, doc, setDoc } from 'firebase/firestore';
-import { collection, addDoc } from "firebase/firestore";
+import { getFirestore } from 'firebase/firestore';
+import { collection, addDoc, doc, setDoc } from "firebase/firestore";
 import {db } from '../FirebaseConfig';
 
 const auth = getAuth();
@@ -56,17 +56,29 @@ const Signup = () => {
             //     uid: userCredential.user.uid,
             //     rol: 'cliente'
             // });
-            const docRef = await addDoc(collection(firestore, "usuarios"), {
-                nombreCompleto: displayName,
-                email: email,
-                uid: userCredential.user.uid,
-                username: username
+
+            // const docRef = await addDoc(collection(firestore, "usuarios"), {
+            //     nombreCompleto: displayName,
+            //     email: email,
+            //     uid: userCredential.user.uid,
+            //     username: username,
+            //     rol: "user"
+            // }); 
+
+            const colecRef = collection(firestore, "users");
+            const docRef = doc(colecRef, userCredential.user.uid);
+            await setDoc(docRef, {
+                  nombreCompleto: displayName,
+                  email: email,
+                  uid: userCredential.user.uid,
+                  username: username,
+                  rol: "user"
             });
+
           // Update user display name
           await updateProfile(userCredential.user, {
             displayName: displayName
           });
-
 
       
           // Navigate to login page

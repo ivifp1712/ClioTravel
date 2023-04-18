@@ -39,8 +39,14 @@ export const Amigos = () => {
     return (
         <>
         { guser ? (
+            <>
             <Header handleLogout={handleLogout} user={guser}/>
-        ) : () => {console.log("no hay usuario")}
+            <h2> Coming soon...</h2>
+
+            </>
+        ) : (
+          <div> No hay usuario autenticado </div>
+          )
         }
         
         </>

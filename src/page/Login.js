@@ -5,11 +5,13 @@ import { NavLink, useNavigate } from 'react-router-dom'
 import { getAuth, signInWithRedirect, GoogleAuthProvider, getRedirectResult } from "firebase/auth";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import './css/login.css'
+import { getFirestore, setDoc, collection, getDoc, doc } from 'firebase/firestore';
 
 const provider = new GoogleAuthProvider();
 const auth = getAuth();
 
 const Login = () => {
+    const firestore = getFirestore();
     const navigate = useNavigate();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -82,10 +84,42 @@ const Login = () => {
        
     }
 
+    const addUserFirestore = async (auth) => {
+      console.log("user uid: ", auth.currentUser.uid)
+      // const docRef = collection("users", auth.currentUser.uid);
+      // const docRef = collection(firestore, "users").doc(auth.currentUser.uid);
+      //const docRef = doc(collection(firestore,"users"), auth.currentUser.uid);
+      const docRef = doc(collection(firestore, "users"), auth.currentUser.uid);
+        const docSnap = await getDoc(docRef);
+        if (docSnap.exists()) {
+          console.log("usuario ya creado!")
+        } else {
+          const docRef2 = await setDoc(docRef, {
+            nombreCompleto: auth.currentUser.displayName,
+            email: auth.currentUser.email,
+            uid: auth.currentUser.uid,
+            username: auth.currentUser.displayName,
+            rol: "user"
+        });}
+      }
+
     useEffect(() => {
+      console.log("auth", auth)
+      // console.log(auth.currentUser)
+      // if (auth.currentUser) {
+      //   console.log("añadiendo usuario", auth.currentUser)
+      //   addUserFirestore()
+      // }
+      //
       getRedirectResult(auth)
         .then((result) => {
-          console.log(result);
+          console.log("result", result);
+          console.log("auth current user", auth.currentUser);
+          if (auth.currentUser) {
+              console.log("añadiendo usuario", auth.currentUser)
+              addUserFirestore(auth)
+            }
+          //addUserFirestore()
           if (result && result.user != null) {
             navigate('/');
           }
