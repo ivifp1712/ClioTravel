@@ -51,10 +51,7 @@ const Login = () => {
       //  const token = credential.accessToken;
       //  // The signed-in user info.
       //  const user = result.user;
-       // IdP data available using getAdditionalUserInfo(result)
-       // ..l,
        navigate("/")
-      //  console.log(user);
      }).catch((error) => {
        // Handle Errors here.
        const errorCode = error.code;
@@ -86,9 +83,6 @@ const Login = () => {
 
     const addUserFirestore = async (auth) => {
       console.log("user uid: ", auth.currentUser.uid)
-      // const docRef = collection("users", auth.currentUser.uid);
-      // const docRef = collection(firestore, "users").doc(auth.currentUser.uid);
-      //const docRef = doc(collection(firestore,"users"), auth.currentUser.uid);
       const docRef = doc(collection(firestore, "users"), auth.currentUser.uid);
         const docSnap = await getDoc(docRef);
         if (docSnap.exists()) {
@@ -105,12 +99,6 @@ const Login = () => {
 
     useEffect(() => {
       console.log("auth", auth)
-      // console.log(auth.currentUser)
-      // if (auth.currentUser) {
-      //   console.log("añadiendo usuario", auth.currentUser)
-      //   addUserFirestore()
-      // }
-      //
       getRedirectResult(auth)
         .then((result) => {
           console.log("result", result);

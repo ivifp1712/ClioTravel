@@ -85,6 +85,7 @@ function App() {
                 <Route path="/viaje/:id" element={<Viaje />} />
                 <Route path="/viaje" element={<Viajes />} />
                 <Route path="/deudas" element={<Deudas user={guser} />} />
+                <Route path="*" element={<Home />} />
               </Routes>
             }
             {!guser &&
