@@ -121,7 +121,7 @@ const Login = () => {
             }
           //addUserFirestore()
           if (result && result.user != null) {
-            navigate('/');
+            navigate('/home');
           }
         })
         .catch((error) => {
