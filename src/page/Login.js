@@ -53,7 +53,7 @@ const Login = () => {
       //  const user = result.user;
        // IdP data available using getAdditionalUserInfo(result)
        // ..l,
-       navigate("/login")
+       navigate("/")
       //  console.log(user);
      }).catch((error) => {
        // Handle Errors here.
@@ -73,7 +73,7 @@ const Login = () => {
         .then((userCredential) => {
             // Signed in
             const user = userCredential.user;
-            navigate("/login")
+            navigate("/")
             console.log(user);
         })
         .catch((error) => {
@@ -121,7 +121,7 @@ const Login = () => {
             }
           //addUserFirestore()
           if (result && result.user != null) {
-            navigate('/login');
+            navigate('/');
           }
         })
         .catch((error) => {
