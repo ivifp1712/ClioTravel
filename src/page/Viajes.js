@@ -225,11 +225,8 @@ export const Viajes = () => {
                             <tr>
                             <th>ID</th>
                             <th>Nombre</th>
-                            <th>Consumo</th>
-                            <th>Precio</th>
                             <th>Distancia</th>
                             <th>Pasajeros</th>
-                            <th>User ID</th>
                             <th>Acciones</th>
                             </tr>
                         </thead>
@@ -239,11 +236,8 @@ export const Viajes = () => {
                                 <td> <Link to={`/viaje/${viaje.idViaje}`}>{viaje.idViaje}</Link>
                                  </td>
                                 <td>{viaje.nombre}</td>
-                                <td>{viaje.consumo}</td>
-                                <td>{viaje.precio}</td>
                                 <td>{viaje.distancia}</td>
                                 <td>{viaje.pasajeros}</td>
-                                <td>{viaje.user_id}</td>
                                 <td>
                                     {
                                         admin ? (
