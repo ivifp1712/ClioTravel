@@ -35,11 +35,6 @@ const Viaje = ({user}) => {
               setGuser(user)
               const uid = user.uid;
               const email = user.email;
-                // setCorreo(email)
-                // setNombre(user.displayName)
-                //setFoto(user.photoURL)
-
-              // ...
               console.log("uid", uid)
               console.log(guser)
             } else {
@@ -61,7 +56,6 @@ const Viaje = ({user}) => {
             const querySnapshot = await getDocs(collection(firestore, "deudas"));
                 const deudas = querySnapshot.docs.map(doc => doc.data());
                 console.log(deudas);
-                //console.log(user)
                 deudas.forEach(deuda => {
                   if (deuda.idViaje == id && deuda.idUsuario == user.uid) {
                     console.log("dentro")
@@ -105,14 +99,24 @@ const Viaje = ({user}) => {
     }
 
     const handleDelete = async () => {
-     
-      const colecRef2 = collection(firestore, "deudas");
-        const docRef2 = doc(colecRef2, `${id}_${guser.uid}`);
-        await deleteDoc(docRef2);
-        cambiarPasajeros(viaje.pasajeros - 1)
-        setDentro(false);
-        fetchViaje();
-        cambiarImporte(((((viaje.distancia * viaje.consumo) / 100 ) * viaje.precio) / viaje.pasajeros).toFixed(2))
+      //const colecRef2 = collection(firestore, "deudas");
+        console.log(id)
+        console.log(guser.uid)
+        console.log(`${id}_${guser.uid}`)
+        let a = `${id}_${guser.uid}`
+        a = a.toString()
+        const docRef2 = doc(firestore, "deudas", a);
+        console.log(docRef2)
+        await deleteDoc(docRef2).then(() => {
+          cambiarPasajeros(viaje.pasajeros - 1).then(() => {
+            fetchViaje();
+          })
+          setDentro(false);
+          // fetchViaje();
+        }).catch((error) => {
+          console.error("Error removing document: ", error);
+        });
+        // cambiarImporte(((((viaje.distancia * viaje.consumo) / 100 ) * viaje.precio) / viaje.pasajeros).toFixed(2))
     }
 
     const cambiarPasajeros = async (pasajeros) => {
@@ -124,7 +128,8 @@ const Viaje = ({user}) => {
           distancia: viaje.distancia,
           consumo: viaje.consumo,
           precio: viaje.precio,
-          pasajeros: pasajeros
+          pasajeros: pasajeros,
+          fee: viaje.fee,
         });
     }
 
@@ -171,7 +176,8 @@ const Viaje = ({user}) => {
             <p>{viaje.precio} €/l</p>
             <p>{viaje.pasajeros} pasajeros</p>
             <p>{(((viaje.distancia * viaje.consumo) / 100 ) * viaje.precio).toFixed(2)} €</p>
-            <p>{((((viaje.distancia * viaje.consumo) / 100 ) * viaje.precio) / viaje.pasajeros).toFixed(2)} € por persona</p>
+            <p>{((((viaje.distancia * viaje.consumo) / 100 ) * viaje.precio)* (1+(viaje.fee/100))).toFixed(2)} €</p>
+            <p>{(((((viaje.distancia * viaje.consumo) / 100 ) * viaje.precio) / viaje.pasajeros)*(1+(viaje.fee/100))).toFixed(2)} € por persona</p>
           </>
         ) : (
           <p>Cargando...</p>

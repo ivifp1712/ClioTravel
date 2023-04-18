@@ -45,10 +45,14 @@ export const Header = ({ handleLogout, user }) => {
             <button type="button" className="btn-close btn-close-white" aria-label="Close" onClick={manejarClickCerrar}></button>
             <ul>
                 <li><Link to={"/"}>Inicio</Link> </li>
+                <br />
                 <li><Link to={"/viajes"}>Viajes</Link> </li>
+                <br />
+                <li><Link to={"/deudas"}>Deudas</Link> </li>
+                <br />
                 {/* <li><Link to={"/amigos"}>Amigos</Link> </li> */}
                 <li><Link to={"/profile"}>Perfil</Link> </li>
-                <li><Link to={"/deudas"}>Deudas</Link> </li>
+                <br />
                 <li><button type="button" className="btn btn-danger" onClick={handleLogout}>Logout</button></li>
                
             </ul>

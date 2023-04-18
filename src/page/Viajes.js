@@ -54,6 +54,7 @@ export const Viajes = () => {
     const [precioGasolina, setPrecioGasolina] = useState(1.6);
     const [distancia, setDistancia] = useState('');
     const [validated, setValidated] = useState(false);
+    const [fee, setFee] = useState(0);
 
   const handleSubmit = async (event) => {
     const form = event.currentTarget;
@@ -72,6 +73,7 @@ export const Viajes = () => {
             consumo: parseFloat(consumo),
             precio: parseFloat(precioGasolina),
             distancia: parseFloat(distancia),
+            fee: parseFloat(fee),
             pasajeros: 0
         });
 
@@ -125,17 +127,20 @@ export const Viajes = () => {
 
     const handleDelete = async (id) => {
         console.log(id);
-        //await deleteDoc(doc(firestore, "viajes", id));
-        //await deleteDoc(doc(firestore, "viajes", id));
         console.log(id.id);
-        //const docRef = doc(firestore, "viajes", id.idViaje);
-        //obtener el doc con el id
         const docRef = doc(firestore, "viajes", id.idViaje.toString());
         console.log(docRef);
         await deleteDoc(docRef);
-        // actualizar la tabla después de eliminar el viaje
         getViajes();
-        //setViajes(viajes.filter(viaje => viaje.id !== id));
+        const querySnapshot = await getDocs(collection(firestore, "deudas"));
+        const deudas = querySnapshot.docs.map(doc => doc.data());
+        console.log(deudas);
+        deudas.filter(deuda => deuda.idViaje == id.idViaje).forEach(async (deuda) => {
+           console.log(deuda.idViaje);
+              const docRef2 = doc(firestore, "deudas", `${id.idViaje}_${deuda.idUsuario}`);
+           console.log(docRef2);
+           await deleteDoc(docRef2);
+        });
     }
 
     async function isAdmin(uid) {
@@ -194,11 +199,19 @@ export const Viajes = () => {
                         <Form.Group controlId="consumo">
                             <Form.Label>Consumo L/100 km</Form.Label>
                             <Form.Control type="number" step="0.1" min="0" value={consumo} onChange={(e) => setConsumo(e.target.value)} />
+                            <Form.Control.Feedback type="invalid">
+                                Por favor, introduzca el consumo.
+                            </Form.Control.Feedback>
                         </Form.Group>
                         <Form.Group controlId="precioGasolina">
                             <Form.Label>Precio de la gasolina</Form.Label>
                             <Form.Control type="number" step="0.01" min="0" value={precioGasolina} onChange={(e) => setPrecioGasolina(e.target.value)} />
+                            <Form.Control.Feedback type="invalid">
+                                Por favor, introduzca el precio de la gasolina.
+                            </Form.Control.Feedback>
                         </Form.Group>
+
+                        
                         <Form.Group controlId="distancia">
                             <Form.Label>Distancia</Form.Label>
                             <Form.Control required type="number" step="0.1" min="0" value={distancia} onChange={(e) => setDistancia(e.target.value)} />
@@ -206,11 +219,14 @@ export const Viajes = () => {
                             Por favor, introduzca la distancia del viaje.
                             </Form.Control.Feedback>
                         </Form.Group>
-
-                            <Button variant="primary" type="submit">
+                        <Form.Group controlId="fee">
+                            <Form.Label>Fee</Form.Label>
+                             <Form.Control type="number" step="0.01" min="0" value={fee} onChange={(e) => setFee(e.target.value)} />
+                        </Form.Group>
+                        <Button variant="primary" type="submit">
                                 Crear viaje
-                            </Button>
-                            </Form>
+                        </Button>
+                        </Form>
                         </Modal.Body>
                         </Modal>
                         </>
