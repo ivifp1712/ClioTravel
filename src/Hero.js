@@ -46,8 +46,8 @@ export const Hero = ({ handleLogout, user }) => {
           <p>
             Selecciona lo que desea hacer en la barra de navegación.
           </p>
-          <div className="d-flex justify-content-center">
-      <Card style={{ width: '18rem' }} className="m-4">
+        {/*  <div className="d-flex justify-content-center">
+       <Card style={{ width: '18rem' }} className="m-4">
         <Card.Body>
           <Card.Title>Viajes</Card.Title>
           <Link to="/viajes" className="btn btn-primary">
@@ -82,7 +82,7 @@ export const Hero = ({ handleLogout, user }) => {
           </Link>
         </Card.Body>
       </Card>
-    </div>
+    </div> */}
         
         </div>
       </>
